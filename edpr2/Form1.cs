@@ -1,9 +1,7 @@
 using System;
-using System.Linq.Expressions;
 using System.Windows.Forms;
 using NCalc;
 using NCalcExpr = NCalc.Expression;
-
 
 namespace edpr2
 {
@@ -19,405 +17,121 @@ namespace edpr2
 
         }
 
-        private void n1_Click(object sender, EventArgs e)
+        private void AppendNumber(string number)
         {
             if (textBox1.Text == "0" && textBox1.Text != null)
             {
-                textBox1.Text = "1";
+                textBox1.Text = number;
             }
             else
             {
-                textBox1.Text += "1";
+                textBox1.Text += number;
             }
         }
 
-        private void n2_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "2";
-            }
-            else
-            {
-                textBox1.Text += "2";
-            }
-        }
+        private void n1_Click(object sender, EventArgs e) => AppendNumber("1");
+        private void n2_Click(object sender, EventArgs e) => AppendNumber("2");
+        private void n3_Click(object sender, EventArgs e) => AppendNumber("3");
+        private void n4_Click(object sender, EventArgs e) => AppendNumber("4");
+        private void n5_Click(object sender, EventArgs e) => AppendNumber("5");
+        private void n6_Click(object sender, EventArgs e) => AppendNumber("6");
+        private void n7_Click(object sender, EventArgs e) => AppendNumber("7");
+        private void n8_Click(object sender, EventArgs e) => AppendNumber("8");
+        private void n9_Click(object sender, EventArgs e) => AppendNumber("9");
+        private void n0_Click(object sender, EventArgs e) => AppendNumber("0");
 
-        private void n3_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "3";
-            }
-            else
-            {
-                textBox1.Text += "3";
-            }
-        }
-
-        private void n4_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "4";
-            }
-            else
-            {
-                textBox1.Text += "4";
-            }
-        }
-
-        private void n5_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "5";
-            }
-            else
-            {
-                textBox1.Text += "5";
-            }
-        }
-
-        private void n6_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "6";
-            }
-            else
-            {
-                textBox1.Text += "6";
-            }
-        }
-
-        private void n7_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "7";
-            }
-            else
-            {
-                textBox1.Text += "7";
-            }
-        }
-
-        private void n8_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "8";
-            }
-            else
-            {
-                textBox1.Text += "8";
-            }
-        }
-
-        private void n9_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == "0" && textBox1.Text != null)
-            {
-                textBox1.Text = "9";
-            }
-            else
-            {
-                textBox1.Text += "9";
-            }
-        }
-
-        private void n0_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text == null || textBox1.Text == "0")
-            {
-                textBox1.Text = "0";
-            }
-            else
-            {
-                textBox1.Text += "0";
-            }
-        }
+        private void nLeftSk_Click(object sender, EventArgs e) => AppendBracket("(");
+        private void nRightSk_Click(object sender, EventArgs e) => AppendBracket(")");
 
         private void Clear_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != null && textBox1.Text != "0")
-            {
-                textBox1.Text = "0";
-            }
+            textBox1.Text = "0";
         }
 
         private void n_dot_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text.Length > 0)
+            if (!textBox1.Text.Contains("."))
             {
                 textBox1.Text += ".";
             }
-            else
-            {
-                textBox1.Text = textBox1.Text;
-            }
         }
 
-        private string currentValue = "";
-        private string operationValue = "";
-
-        private void nPlus_Click(object sender, EventArgs e)
+        private void AppendOperation(string operation)
         {
-            if (textBox1.Text != null)
+            if (textBox1.Text.Length > 0 && "+-*/".IndexOf(textBox1.Text[^1]) == -1 && textBox1.Text[^1] != '(')
             {
-                currentValue = textBox1.Text;
-                textBox1.Text = "0";
-                operationValue = "+";
+                textBox1.Text += operation;
             }
         }
 
-        private void nUmn_Click(object sender, EventArgs e)
+        private void AppendBracket(string bracket)
         {
-            if (textBox1.Text != null)
+            if (bracket == "(")
             {
-                currentValue = textBox1.Text;
-                textBox1.Text = "0";
-                operationValue = "*";
+                if (textBox1.Text.Length == 0 || "+-*/(".Contains(textBox1.Text[^1]))
+                {
+                    textBox1.Text += bracket;
+                }
+            }
+            else if (bracket == ")")
+            {
+                int openBrackets = textBox1.Text.Split('(').Length - 1;
+                int closeBrackets = textBox1.Text.Split(')').Length - 1;
+
+                if (openBrackets > closeBrackets && "+-*/".IndexOf(textBox1.Text[^1]) == -1)
+                {
+                    textBox1.Text += bracket;
+                }
             }
         }
 
-        private void nMinus_Click(object sender, EventArgs e)
+        private void nPlus_Click(object sender, EventArgs e) => AppendOperation("+");
+        private void nMinus_Click(object sender, EventArgs e) => AppendOperation("-");
+        private void nUmn_Click(object sender, EventArgs e) => AppendOperation("*");
+        private void nDelen_CLick(object sender, EventArgs e) => AppendOperation("/");
+
+        private void AppendFunction(string functionName)
         {
-            if (textBox1.Text != null)
+            if (textBox1.Text == "0")
             {
-                currentValue = textBox1.Text;
-                textBox1.Text = "0";
-                operationValue = "-";
+                textBox1.Text = $"{functionName}(";
+            }
+            else if ("+-*/(".Contains(textBox1.Text[^1]))
+            {
+                textBox1.Text += $"{functionName}(";
             }
         }
 
-        private void nDelen_CLick(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                currentValue = textBox1.Text;
-                textBox1.Text = "0";
-                operationValue = "/";
-            }
-        }
+        private void sin_Click(object sender, EventArgs e) => AppendFunction("sin");
+        private void cos_Click(object sender, EventArgs e) => AppendFunction("cos");
+        private void tan_Click(object sender, EventArgs e) => AppendFunction("tan");
+        private void log_Click(object sender, EventArgs e) => AppendFunction("Log(10,"); 
+        private void exp_Click(object sender, EventArgs e) => AppendFunction("Exp(");
+        private void asin_Click(object sender, EventArgs e) => AppendFunction("asin");
+        private void acos_Click(object sender, EventArgs e) => AppendFunction("acos");
+        private void atan_Click(object sender, EventArgs e) => AppendFunction("atan");
 
         private void nRavno_Click(object sender, EventArgs e)
         {
-            if (textBox1.Text != null && currentValue != "")
+            try
             {
-                try
+                int openBrackets = textBox1.Text.Split('(').Length - 1;
+                int closeBrackets = textBox1.Text.Split(')').Length - 1;
+                for (int i = 0; i < openBrackets - closeBrackets; i++)
                 {
-                    decimal result = 0;
-                    switch (operationValue)
-                    {
-                        case "+":
-                            result = decimal.Parse(currentValue) + decimal.Parse(textBox1.Text);
-                            break;
-                        case "-":
-                            result = decimal.Parse(currentValue) - decimal.Parse(textBox1.Text);
-                            break;
-                        case "*":
-                            result = decimal.Parse(currentValue) * decimal.Parse(textBox1.Text);
-                            break;
-                        case "/":
-                            result = decimal.Parse(currentValue) / decimal.Parse(textBox1.Text);
-                            break;
-                    }
-                    textBox1.Text = result.ToString("F10");
-                    currentValue = "";
-                    operationValue = "";
+                    textBox1.Text += ")";
                 }
-                catch (Exception ex)
-                {
-                    textBox1.Text = "Ошибка: " + ex.Message;
-                }
+
+                NCalcExpr ncalcExpression = new NCalcExpr(textBox1.Text);
+                var result = ncalcExpression.Evaluate();
+                textBox1.Text = Convert.ToDecimal(result).ToString("F10");
+            }
+            catch (Exception ex)
+            {
+                textBox1.Text = "Ошибка: " + ex.Message;
             }
         }
 
-        private decimal EvaluateExpression(string expression)
-        {
-            // парсим выражение
-            string[] parts = expression.Split('+');
-            if (parts.Length > 1)
-            {
-                decimal sum = 0;
-                foreach (string part in parts)
-                {
-                    sum += EvaluatePart(part);
-                }
-                return sum;
-            }
-            else
-            {
-                return EvaluatePart(expression);
-            }
-        }
-
-        private decimal EvaluatePart(string part)
-        {
-            // парсим часть выражения
-            string[] parts = part.Split('/');
-            if (parts.Length > 1)
-            {
-                decimal result = decimal.Parse(parts[0]);
-                for (int i = 1; i < parts.Length; i++)
-                {
-                    result /= decimal.Parse(parts[i]);
-                }
-                return result;
-            }
-            else
-            {
-                parts = part.Split('*');
-                if (parts.Length > 1)
-                {
-                    decimal result = decimal.Parse(parts[0]);
-                    for (int i = 1; i < parts.Length; i++)
-                    {
-                        result *= decimal.Parse(parts[i]);
-                    }
-                    return result;
-                }
-                else
-                {
-                    return decimal.Parse(part);
-                }
-            }
-        }
-
-        private double Logarithm(double value)
-        {
-            return Math.Log(value);
-        }
-
-        private double Exponent(double value)
-        {
-            return Math.Exp(value);
-        }
-
-        private void log_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                try
-                {
-                    double value = Convert.ToDouble(textBox1.Text);
-                    double result = Logarithm(value);
-                    textBox1.Text = string.Format("{0:F10}", result);
-                }
-                catch (Exception ex)
-                {
-                    textBox1.Text = "Ошибка: " + ex.Message;
-                }
-            }
-        }
-
-        private void exp_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                try
-                {
-                    double value = Convert.ToDouble(textBox1.Text);
-                    double result = Exponent(value);
-                    textBox1.Text = string.Format("{0:F10}", result);
-                }
-                catch (Exception ex)
-                {
-                    textBox1.Text = "Ошибка: " + ex.Message;
-                }
-            }
-        }
-
-        private void sin_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                double angleInRadians = DegreesToRadians(value);
-                double result = Math.Sin(angleInRadians);
-                textBox1.Text = result.ToString("F10");
-            }
-        }
-
-        private void cos_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                double angleInRadians = DegreesToRadians(value);
-                double result = Math.Cos(angleInRadians);
-                textBox1.Text = result.ToString("F10");
-            }
-        }
-
-        private void tan_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                double angleInRadians = DegreesToRadians(value);
-                double result = Math.Tan(angleInRadians);
-                textBox1.Text = result.ToString("F10");
-            }
-        }
-
-        private void asin_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                if (value < -1 || value > 1)
-                {
-                    textBox1.Text = "Ошибка: значение вне диапазона";
-                }
-                else
-                {
-                    double result = Math.Asin(value);
-                    double angleInDegrees = RadiansToDegrees(result);
-                    textBox1.Text = angleInDegrees.ToString("F10");
-                }
-            }
-        }
-
-        private void acos_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                if (value < -1 || value > 1)
-                {
-                    textBox1.Text = "Ошибка: значение вне диапазона";
-                }
-                else
-                {
-                    double result = Math.Acos(value);
-                    double angleInDegrees = RadiansToDegrees(result);
-                    textBox1.Text = angleInDegrees.ToString("F10");
-                }
-            }
-        }
-
-        private void atan_Click(object sender, EventArgs e)
-        {
-            if (textBox1.Text != null)
-            {
-                double value = Double.Parse(textBox1.Text);
-                double result = Math.Atan(value);
-                double angleInDegrees = RadiansToDegrees(result);
-                textBox1.Text = angleInDegrees.ToString("F10");
-            }
-        }
-
-        private double DegreesToRadians(double degrees)
-        {
-            return degrees * Math.PI / 180;
-        }
-
-        private double RadiansToDegrees(double radians)
-        {
-            return radians * 180 / Math.PI;
-        }
+        
     }
 }
