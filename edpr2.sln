@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.10.35013.160
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "edpr2", "edpr2\edpr2.csproj", "{23CE1449-01AC-471B-A1EC-D27298467E3B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23CE1449-01AC-471B-A1EC-D27298467E3B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23CE1449-01AC-471B-A1EC-D27298467E3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23CE1449-01AC-471B-A1EC-D27298467E3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23CE1449-01AC-471B-A1EC-D27298467E3B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {92B10EA5-80EB-4BE8-9F87-BBB45CBA99BA}
+	EndGlobalSection
+EndGlobal
